@@ -12,7 +12,7 @@ U_CRON_FILE_PATH="$PWD"/crontab/"$(date +%Y%m%d_%H%M%s)".cron""
 
 ## MODIFY THIS
 RSCRIPT_CMD_PATH="/usr/bin/Rscript"
-R_SCRIPTS_PATH=$PWD"r_scripts_test"
+R_SCRIPTS_PATH=$PWD"r_scripts_test/"
 
 
 
