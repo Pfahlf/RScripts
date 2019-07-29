@@ -44,4 +44,38 @@ Paste the ouput inside `run.sh` by modyfing the variable `RSCRIPT_CMD_PATH`
 RSCRIPT_CMD_PATH="/usr/bin/Rscript"
 ```
 
+## Defining Cron Jobs for R scripts
+In order to define which r script has to run and when, you need to modify the `data.json` 
 
+The `script_name` is the name of the script that we find inside the folder defined above (in this example `/home/rscrpt/`)
+
+In the belowe example, `test.R` runs every minute, while `test1.R` runs every hour.
+
+```
+[
+    {
+        "script_name" : "test.R",
+        "script_time" : {
+            "time" : "1",
+            "format" : "minute"
+        }
+    },
+    {
+        "script_name" : "test1.R",
+        "script_time" : {
+            "time" : "1",
+            "format" : "hour"
+        }
+    }
+]
+```
+
+
+
+
+## Running the Scripts
+
+Simply run the following command after having done the previsout steps:
+```
+./run.sh
+```
