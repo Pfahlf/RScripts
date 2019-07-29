@@ -11,7 +11,7 @@ CRONTABS_PATH=$PWD"/crontab/"
 DATA_JSON_PATH=$SCRIPT_PATH"data.json"
 U_CRON_FILE_PATH="$PWD"/crontab/"$(date +%Y%m%d_%H%M%s)".cron""
 
-RSCRIPT_CMD_PATH="/usr/local/bin/Rscript"
+RSCRIPT_CMD_PATH="/usr/bin/Rscript"
 
 
 
