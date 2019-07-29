@@ -17,13 +17,31 @@ sudo apt-get install cron
 
 ## Script setup
 
-If alreadty inside Rscript folder, run:
+Those steps need to be done only once, after the first installation
 
-```nano run.sh```
+### Step 1 -- Setting up R scripts folder
+The script requires to have all <b>R Scripts</b> that we want to run in a cron job inside the same folder.
+Suppose we have all the R scripts inside a folder `/home/rscrpt/`, then
 
-if not,
+Paste the path inside `run.sh` by modyfing the variable `R_SCRIPTS_PATH`
 
 ```
-cd Rscripts
-nano run.sh
+R_SCRIPTS_PATH="/home/rscrpt/"
 ```
+
+inside the folder `rscrpt` we can have insidide as man Rscript as we want.
+
+### STEP 2 -- Setting up Rscript command path
+
+Run the following command in the vm, and remember the output
+```
+$ which Rscript
+/usr/bin/Rscript
+```
+
+Paste the ouput inside `run.sh` by modyfing the variable `RSCRIPT_CMD_PATH`
+```
+RSCRIPT_CMD_PATH="/usr/bin/Rscript"
+```
+
+
