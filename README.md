@@ -85,3 +85,15 @@ In case of emergency, to stop all cron jobs run the following command
 ```
 crontab -r
 ```
+
+<b> MUST </b>
+VMs might be restarted, to ensure the script keeps running do the following 
+
+```
+crontab -e 
+```
+select the editor, and paste the follwing
+
+```
+@reboot sh path/to/Rscript/run.sh
+```
