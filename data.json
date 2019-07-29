@@ -1,0 +1,9 @@
+[
+    {
+        "script_name" : "test.R",
+        "script_time" : {
+            "time" : "1",
+            "format" : "minute"
+        }
+    }
+]
