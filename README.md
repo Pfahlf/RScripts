@@ -79,3 +79,9 @@ Simply run the following command after having done the previsout steps:
 ```
 ./run.sh
 ```
+
+In case of emergency, to stop all cron jobs run the following command
+
+```
+crontab -r
+```
