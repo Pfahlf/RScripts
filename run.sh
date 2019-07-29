@@ -4,14 +4,15 @@ declare -a script_array
 declare -a script_time_data
 declare -a script_cron_format
 
-
+## DONOT MODIFY THIS
 SCRIPT_PATH=$PWD"/"
-R_SCRIPTS_PATH="/Users/federicopfahler/Desktop/scripts/r_scripts_test/"
 CRONTABS_PATH=$PWD"/crontab/"
 DATA_JSON_PATH=$SCRIPT_PATH"data.json"
 U_CRON_FILE_PATH="$PWD"/crontab/"$(date +%Y%m%d_%H%M%s)".cron""
 
+## MODIFY THIS
 RSCRIPT_CMD_PATH="/usr/bin/Rscript"
+R_SCRIPTS_PATH="/home/rscrpt/"
 
 
 
