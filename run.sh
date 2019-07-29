@@ -33,9 +33,7 @@ script_handler(){
     for key in "${!script_array[@]}"
     do
         script_name=$(jq '.script_name' <<< ${script_array[$key]}) 
-        script_time=$(jq '.script_time.time' <<< ${script_array[$key]})
-        script_format=$(jq '.script_time.format' <<< ${script_array[$key]})
-
+        script_time="$(jq '.script_time' <<< ${script_array[$key]})"
         generate_cron_string
         print_info        
     done
@@ -46,39 +44,17 @@ script_handler(){
 
 
 generate_cron_string(){
-    script_time_format=$(
-        case "$script_format" in
-            (*"minute"*) echo "0" ;;
-            (*"hour"*) echo "1" ;;
-            (*"day"*) echo "2" ;;
-            (*"hour"*) echo "3" ;;
-            (*) echo "NA" ;;
-        esac)
-    DESTINATIONS=""
-    for i in 0 1 2 3 4 
-        do
-            if [ $i == $script_time_format ]; then
-                DESTINATIONS+=" */${script_time} "
-            else
-                if [ "$i" -le "$script_time_format" ];then
-                    DESTINATIONS+=' 1 '
-                else 
-                    DESTINATIONS+=' "\*" '
-                fi 
-            fi    
-        done
+    script_time_format="$script_time"
     get_final_cron_string
     create_crontab_file
 }
 get_final_cron_string(){
-    final_cron_time_string="$(echo $DESTINATIONS | sed 's|[\\]||g')"
-    echo $final_cron_time_string
     final_cron_script_name="$(echo $script_name | sed 's/["]//g')"
-    final_cron_string="$final_cron_time_string $RSCRIPT_CMD_PATH $R_SCRIPTS_PATH$final_cron_script_name"
+    final_cron_string="$script_time_format $RSCRIPT_CMD_PATH $R_SCRIPTS_PATH$final_cron_script_name"
 }
 
 create_crontab_file(){
-    echo $final_cron_string "> "$SCRIPT_PATH"logs/"$script_name"_temp.log 2>&1 || cat "$SCRIPT_PATH"logs/"$script_name"_temp.log && cat "$SCRIPT_PATH"logs/"$script_name"_temp.log >> "$SCRIPT_PATH"logs/"$script_name"$(date +%Y%m%d_%H%M%s)""_persistent.log && rm "$SCRIPT_PATH"logs/"$script_name"_temp.log" | tr -d "\"" >> $U_CRON_FILE_PATH 
+    echo "$final_cron_string" "> "$SCRIPT_PATH"logs/"$(basename $script_name)"_temp.log 2>&1 || cat "$SCRIPT_PATH"logs/"$(basename $script_name)"_temp.log && cat "$SCRIPT_PATH"logs/"$(basename $script_name)"_temp.log >> "$SCRIPT_PATH"logs/"$(basename $script_name)"$(date +%Y%m%d_%H%M%s)""_persistent.log && rm "$SCRIPT_PATH"logs/"$(basename $script_name)"_temp.log" | tr -d "\"" >> $U_CRON_FILE_PATH 
 }
 
 reset_crontab(){
@@ -100,9 +76,8 @@ print_kv(){
 
 print_info(){
     echo "----- ---- SCRIPT ---- -----"
-    echo "Starting" $script_name 
-    echo "Running every" $script_time $script_format
-    echo "----- ---- ---- -----"
+    echo "Starting" $script_name "with format"  "$script_time_format"
+    echo "----- ---- ---- -----" 
     echo ""
 }
 
@@ -114,6 +89,10 @@ print_start(){
 }
 
 print_exit(){
+    echo "----- ---- VERIFY ---- -----"
     crontab -l
+    echo "----- ---- ---- -----"
 }
 run
+
+# fswatch -e ".*" -i ".*/[^.]*\\.xxx$" .

@@ -1,9 +1,15 @@
 [
     {
         "script_name" : "test.R",
-        "script_time" : {
-            "time" : "1",
-            "format" : "minute"
-        }
+        "script_time" : "*/1 * * * *"
+    },
+    {
+        "script_name" : "subdir/test1.R",
+        "script_time" : "*/1 * * * *"
+    }
+    ,
+    {
+        "script_name" : "test2.R",
+        "script_time" : "*/1 * * * *"
     }
 ]
